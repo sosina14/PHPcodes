@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "Both numbers are equal.";
         }
     } else {
-        echo "Please enter valid numbers.";
+        echo "Not a valid numbers.";
     }
 }
 ?>
