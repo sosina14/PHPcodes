@@ -18,14 +18,12 @@ $books = $stmt->fetchAll();
 <body>
 <h1>Welcome to the Library Management System</h1>
 
-    <h1>Book List</h1>
-    <nav>
-        <a href="add_book.php">Add Book</a> |
-        <a href="search.php">Search Books</a> |
-        <a href="view_books.php">View Books</a>
-    </nav>
-
+   
+    <a href="search.php">Search Books</a> |
     <a href="add.php">Add New Book</a>
+
+
+    <h3>Book List</h3>
     <ul>
         <?php foreach ($books as $book): ?>
             <li>
