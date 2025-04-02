@@ -1,5 +1,5 @@
 <?php
-//sth
+// Add book form
 include 'db.php';
 
 $title = $author = $genre = $year = "";
