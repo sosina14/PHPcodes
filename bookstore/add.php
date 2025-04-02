@@ -1,32 +1,50 @@
 <?php
 include 'db.php';
 
+$title = $author = $genre = $year = "";
+$errors = [];
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $title = $_POST['title'];
-    $author = $_POST['author'];
-    $genre = $_POST['genre'];
-    $published_year = $_POST['published_year'];
+    if (empty($_POST['title'])) {
+        $errors[] = "Book title is required.";
+    } else {
+        $title = htmlspecialchars($_POST['title']);
+    }
 
-    $stmt = $pdo->prepare("INSERT INTO books (title, author, genre, published_year) VALUES (?, ?, ?, ?)");
-    $stmt->execute([$title, $author, $genre, $published_year]);
+    if (empty($_POST['author'])) {
+        $errors[] = "Author name is required.";
+    } else {
+        $author = htmlspecialchars($_POST['author']);
+    }
 
-    header("Location: index.php");
+    if (!empty($_POST['published_year']) && !is_numeric($_POST['published_year'])) {
+        $errors[] = "Published year must be a number.";
+    } else {
+        $year = $_POST['published_year'];
+    }
+
+    if (empty($errors)) {
+        $stmt = $pdo->prepare("INSERT INTO books (title, author, genre, published_year) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$title, $author, $_POST['genre'], $year]);
+        echo "Book added successfully!";
+    }
 }
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Add Book</title>
-</head>
-<body>
-    <h1>Add New Book</h1>
-    <form method="POST">
-        Title: <input type="text" name="title" required><br>
-        Author: <input type="text" name="author" required><br>
-        Genre: <input type="text" name="genre"><br>
-        Published Year: <input type="number" name="published_year" min="1900" max="2100"><br>
-        <input type="submit" value="Add Book">
-    </form>
-</body>
-</html>
+<!-- HTML Form -->
+<form method="POST">
+    Title: <input type="text" name="title" required><br>
+    Author: <input type="text" name="author" required><br>
+    Genre: <input type="text" name="genre"><br>
+    Year: <input type="number" name="published_year"><br>
+    <input type="submit" value="Add Book">
+</form>
+
+<!-- Display errors -->
+<?php if (!empty($errors)): ?>
+    <ul>
+        <?php foreach ($errors as $error) : ?>
+            <li style="color: red;"><?= $error; ?></li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>
