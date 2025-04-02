@@ -32,6 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 
 <!-- HTML Form -->
+ <head> <link rel="stylesheet" href="style.css">
+ </head>
 <form method="POST">
     Title: <input type="text" name="title" required><br>
     Author: <input type="text" name="author" required><br>
