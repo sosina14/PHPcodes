@@ -16,7 +16,7 @@ $books = $stmt->fetchAll();
 
 </head>
 <body>
-<h1>***Welcome to the Library Management System***</h1>
+<h1>** Welcome to the Library Management System **</h1>
 
    
     <a href="search.php">Search Books</a> |
